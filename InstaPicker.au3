@@ -25,7 +25,7 @@ Opt("PixelCoordMode", 2);Coord relative to client window (dota 2)
 Opt("WinTitleMatchMode", -1)
 
 ;Default Global Variables
-Global $hero, $pixel
+Global $hero, $pixel[2]
 
 ;Hotkey to change hero.
 Global $hotkey = "{f6}";Hotkey to change hero
@@ -65,15 +65,13 @@ Func ChooseHero()
 	;Ensures Dota is active and on top with focus.
 	ProcessWait("dota2.exe")
 	WinWait("Dota 2")
-	$whnd = WinActivate("Dota 2")
-	Sleep(3000)
 
 	;Get Dota's window size
 	Do
-		$pixel[0] = _WinAPI_GetClientWidth($whnd)
-		$pixel[1] = _WinAPI_GetClientHeight($whnd)
-	Until ($pixel[0] <> 0) And ($pixel[1] <> 0)
-
+		$whnd = WinActivate("Dota 2")
+	Until (_WinAPI_GetClientWidth($whnd) <> 0) And (_WinAPI_GetClientHeight($whnd) <> 0)
+	$pixel[0] = _WinAPI_GetClientWidth($whnd)
+	$pixel[1] = _WinAPI_GetClientHeight($whnd)
 	;Ready to go, waiting to snipe
 	Snipe()
 EndFunc   ;==>ChooseHero
