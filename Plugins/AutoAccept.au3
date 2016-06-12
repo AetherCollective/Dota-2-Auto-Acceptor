@@ -1,6 +1,6 @@
 Global $AutoAcceptPluginLoaded = True
 Global $AAState = True
-Global $PixelDecline, $ColorDecline = "", $PixelAccept, $ColorAccept = ""
+Global $PixelDecline, $ColorDecline, $PixelAccept, $ColorAccept
 Opt("PixelCoordMode", 2)
 Opt("MouseCoordMode", 2)
 Func AutoAccept($iX, $iY)
@@ -8,10 +8,10 @@ Func AutoAccept($iX, $iY)
 	LoadCoordinates($iX, $iY)
 	If Not WinActive("Dota 2") Then Return (0)
 	ConsoleWrite("AutoAccept Called!" & @CRLF)
-	PixelSearch($PixelDecline[0], $PixelDecline[1], $PixelDecline[0], $PixelDecline[1], $ColorDecline,1)
+	PixelSearch($PixelDecline[0], $PixelDecline[1], $PixelDecline[0], $PixelDecline[1], $ColorDecline, 1)
 	If Not @error = 1 Then
 		ConsoleWrite("Found Decline." & @CRLF)
-		PixelSearch($PixelAccept[0], $PixelAccept[1], $PixelAccept[0], $PixelAccept[1], $ColorAccept,1)
+		PixelSearch($PixelAccept[0], $PixelAccept[1], $PixelAccept[0], $PixelAccept[1], $ColorAccept, 1)
 		If Not @error = 1 Then
 			ConsoleWrite("Found Accept. Accepting Game." & @CRLF)
 			MouseClick("primary", $PixelAccept[0], $PixelAccept[1], 2, 0)
@@ -40,47 +40,47 @@ Func toggleAA()
 EndFunc   ;==>toggleAA
 Func LoadCoordinates($iX, $iY)
 	Select
-		Case $iX = "1920" And $iY = "1080";confirmed
+		Case $iX = "1920" And $iY = "1080" ;confirmed
 			Global $PixelDecline = [1202, 589]
 			$ColorDecline = 0x869797
 			Global $PixelAccept = [960, 503]
 			$ColorAccept = 0x3D6251
-		Case $iX = "1768" And $iY = "992";confirmed
+		Case $iX = "1768" And $iY = "992" ;confirmed
 			Global $PixelDecline = [1106, 539]
 			$ColorDecline = 0x869797
 			Global $PixelAccept = [884, 459]
 			$ColorAccept = 0x3A5D4D
-		Case $iX = "1600" And $iY = "900";confirmed
+		Case $iX = "1600" And $iY = "900" ;confirmed
 			Global $PixelDecline = [1000, 491]
 			$ColorDecline = 0x869797
 			Global $PixelAccept = [799, 419]
 			$ColorAccept = 0x3C6250
-		Case $iX = "1360" And $iY = "768";confirmed
+		Case $iX = "1360" And $iY = "768" ;confirmed
 			Global $PixelDecline = [847, 418]
 			$ColorDecline = 0x869797
 			Global $PixelAccept = [682, 358]
 			$ColorAccept = 0x3E6553
-		Case $iX = "1366" And $iY = "768";confirmed
+		Case $iX = "1366" And $iY = "768" ;confirmed
 			Global $PixelDecline = [851, 418]
 			$ColorDecline = 0x869797
 			Global $PixelAccept = [679, 355]
 			$ColorAccept = 0x3C614F
-		Case $iX = "1280" And $iY = "720";confirmed
+		Case $iX = "1280" And $iY = "720" ;confirmed
 			Global $PixelDecline = [802, 391]
 			$ColorDecline = 0x869797
 			Global $PixelAccept = [641, 334]
 			$ColorAccept = 0x3C6250
-		Case $iX = "1176" And $iY = "664";confirmed
+		Case $iX = "1176" And $iY = "664" ;confirmed
 			Global $PixelDecline = [736, 363]
 			$ColorDecline = 0x869797
 			Global $PixelAccept = [589, 309]
 			$ColorAccept = 0x3D6351
-		Case $iX = "1280" And $iY = "1024";confirmed
+		Case $iX = "1280" And $iY = "1024" ;confirmed
 			Global $PixelDecline = [866, 558]
 			$ColorDecline = 0x869797
 			Global $PixelAccept = [636, 478]
 			$ColorAccept = 0x3F6654
-		Case $iX = "1280" And $iY = "960";confirmed
+		Case $iX = "1280" And $iY = "960" ;confirmed
 			Global $PixelDecline = [857, 522]
 			$ColorDecline = 0x869797
 			Global $PixelAccept = [641, 447]

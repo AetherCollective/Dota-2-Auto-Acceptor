@@ -1,9 +1,12 @@
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
-;#AutoIt3Wrapper_UseUpx=y
+#AutoIt3Wrapper_Icon=InstaPicker.ico
+#AutoIt3Wrapper_UseUpx=y
+#AutoIt3Wrapper_UseX64=n
 #AutoIt3Wrapper_Res_Fileversion=1.1.1.0
 #AutoIt3Wrapper_Run_AU3Check=n
 #AutoIt3Wrapper_Run_Before=attrib "%LocalAppData%\AutoIt v3\Aut2exe\*" -R /S /D
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
+;#AutoIt3Wrapper_UseUpx=y
 ;Ensures only one copy of the script is running at any time.
 #include "Misc.au3"
 #include <ButtonConstants.au3>
