@@ -1,7 +1,6 @@
 #RequireAdmin
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=AutoAcceptor.ico
-#AutoIt3Wrapper_Outfile=AutoAcceptor-test.exe
 #AutoIt3Wrapper_UseUpx=y
 #AutoIt3Wrapper_UseX64=n
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
