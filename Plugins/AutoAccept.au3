@@ -7,25 +7,15 @@ Func AutoAccept($iX, $iY)
 	If $AAState = False Then Return 0
 	LoadCoordinates($iX, $iY)
 	If Not WinActive("Dota 2") Then Return (0)
-	ConsoleWrite("AutoAccept Called!" & @CRLF)
-	PixelSearch($PixelDecline[0], $PixelDecline[1], $PixelDecline[0], $PixelDecline[1], $ColorDecline, 1)
+	PixelSearch($PixelDecline[0], $PixelDecline[1], $PixelDecline[0], $PixelDecline[1], $ColorDecline, 1);decline search
 	If Not @error = 1 Then
-		ConsoleWrite("Found Decline." & @CRLF)
-		PixelSearch($PixelAccept[0], $PixelAccept[1], $PixelAccept[0], $PixelAccept[1], $ColorAccept, 1)
+		PixelSearch($PixelAccept[0], $PixelAccept[1], $PixelAccept[0], $PixelAccept[1], $ColorAccept, 1);accept search
 		If Not @error = 1 Then
-			ConsoleWrite("Found Accept. Accepting Game." & @CRLF)
 			MouseClick("primary", $PixelAccept[0], $PixelAccept[1], 2, 0)
 			MouseMove(0, 0, 0)
-		Else
-			ConsoleWrite("Nothing Happened." & @CRLF)
-			ConsoleWrite("Decline should be " & StringToBinary(PixelGetColor($PixelDecline[0], $PixelDecline[1])) & " at " & $PixelDecline[0] & "x" & $PixelDecline[1] & @CRLF)
-			ConsoleWrite("Accept should be " & StringToBinary(PixelGetColor($PixelAccept[0], $PixelAccept[1])) & " at " & $PixelAccept[0] & "x" & $PixelAccept[1] & @CRLF & @CRLF)
 		EndIf
-	Else
-		ConsoleWrite("Nothing Happened." & @CRLF)
-		ConsoleWrite("Decline should be " & StringToBinary(PixelGetColor($PixelDecline[0], $PixelDecline[1])) & " at " & $PixelDecline[0] & "x" & $PixelDecline[1] & @CRLF)
-		ConsoleWrite("Accept should be " & StringToBinary(PixelGetColor($PixelAccept[0], $PixelAccept[1])) & " at " & $PixelAccept[0] & "x" & $PixelAccept[1] & @CRLF & @CRLF)
 	EndIf
+	return 2
 EndFunc   ;==>AutoAccept
 Func toggleAA()
 	If $AAState = True Then
