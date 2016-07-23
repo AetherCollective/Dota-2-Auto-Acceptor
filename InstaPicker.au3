@@ -19,22 +19,22 @@
 _Singleton("InstaPicker.BetaLeaf")
 
 ;Delays required for Directx.
-Opt("SendKeyDownDelay", 15);required input delay
-Opt("SendKeyDelay", 15);required input delay
-Opt("SendAttachMode", 1);ensures keys are sent in the correct case
-Opt("PixelCoordMode", 2);Coord relative to client window (dota 2)
+Opt("SendKeyDownDelay", 15) ;required input delay
+Opt("SendKeyDelay", 15) ;required input delay
+Opt("SendAttachMode", 1) ;ensures keys are sent in the correct case
+Opt("PixelCoordMode", 2) ;Coord relative to client window (dota 2)
 
 ;case insensitive window title
-Opt("WinTitleMatchMode", -1)
+Opt("WinTitleMatchMode", 3)
 
 ;Default Global Variables
-Global $hero, $pixel[2]
+Global $hero, $whnd
 
 ;Hotkey to change hero.
-Global $hotkey = "{f6}";Hotkey to change hero
+Global $hotkey = "{f6}" ;Hotkey to change hero
 If IsDeclared("AutoAcceptPluginLoaded") Then $hotkeyAA = "{f7}"
 If IsDeclared("AutoAcceptPluginLoaded") Then HotKeySet($hotkeyAA, "toggleAA")
-HotKeySet($hotkey, "ChooseHero");Binds the selected hotkey
+HotKeySet($hotkey, "ChooseHero") ;Binds the selected hotkey
 #Region ### START Koda GUI section ### Form=
 $HeroSniper = GUICreate("HeroSniper", 190, 100, -1, -1, BitOR($WS_POPUP, $WS_CAPTION, $WS_SYSMENU, $DS_SETFOREGROUND, $WS_EX_TOPMOST))
 $Question = GUICtrlCreateLabel("Which hero do you want to play as?" & @CRLF & "Press " & $hotkey & " at any time to repick.", 8, 8, 170, 33)
@@ -73,8 +73,6 @@ Func ChooseHero()
 	Do
 		$whnd = WinActivate("Dota 2")
 	Until (_WinAPI_GetClientWidth($whnd) <> 0) And (_WinAPI_GetClientHeight($whnd) <> 0)
-	$pixel[0] = _WinAPI_GetClientWidth($whnd)
-	$pixel[1] = _WinAPI_GetClientHeight($whnd)
 	;Ready to go, waiting to snipe
 	Snipe()
 EndFunc   ;==>ChooseHero
@@ -83,14 +81,14 @@ Func Snipe()
 	;Loop so you always get the hero you want every game
 	While 1
 		;Looks for the red X we set earlier, with some extra slack. Slack is needed due to the weird scaling dota 2 uses and multiple screensizes. Untested for all resolutions except 1920x1080. If it doesn't work for you, please comment on my site at betaleaf.net/instapicker or email me at admin@betaleaf.net and I will be more than happy to fix it.
-		PixelSearch(Int($pixel[0] * 0.9875549048316252 - 2), Int($pixel[1] * 0.0208333333333333 - 2), Int($pixel[0] * 0.9875549048316252 + 2), Int($pixel[1] * 0.0208333333333333 + 2), 0x5A1F1F);
+		PixelSearch(Int(_WinAPI_GetClientWidth($whnd) * 0.9875549048316252 - 2), Int(_WinAPI_GetClientHeight($whnd) * 0.0208333333333333 - 2), Int(_WinAPI_GetClientWidth($whnd) * 0.9875549048316252 + 2), Int(_WinAPI_GetClientHeight($whnd) * 0.0208333333333333 + 2), 0x5A1F1F) ;
 
 		;Unless it did not find the red X then...
 		If Not @error = 1 Then
-			Sleep(1000 / @DesktopRefresh);Sleep for a frame.
+			Sleep(1000 / @DesktopRefresh) ;Sleep for a frame.
 			;At this point, the script knows you are in character select as the red X is only present in character select. The script will click the center of the screen to ensure focus on the Card UI. If card UI is not selected, you must press ctrl manually.
 			MouseClick("Left", @DesktopWidth * 0.5, @DesktopHeight * 0.5, 1, 0)
-			Sleep(1000 / @DesktopRefresh);Sleep for a frame.
+			Sleep(1000 / @DesktopRefresh) ;Sleep for a frame.
 			;Send the string you set earlier. This string contains the name of the hero you want to play. After this string is sent to Dota 2, Enter is pressed 20 times. Some systems lag immediately when entering character select and by pressing enter a lot of time, it will still register immediately upon entering instead of waiting on the lag to end.
 			Send(StringLower($hero))
 			Sleep(1000 / @DesktopRefresh * 2)
@@ -100,11 +98,17 @@ Func Snipe()
 			Sleep(1000)
 
 			;Wait for character select phase to end.
-			Sleep(3 * 60 * 1000);Waiting for 3 minutes. IK pick isnt 3 minutes long, but if someones pauses before you can load your hero on the map (still at the pick screen), the script will try to run again.
+			Sleep(1 * 60 * 1000 + 45 * 1000) ;Waiting for 1 minutes and 45 seconds. IK pick isnt 3 minutes long, but if someones pauses before you can load your hero on the map (still at the pick screen), the script will try to run again.
 		Else
 			;Put the script in Idle Mode.
-			If IsDeclared("AutoAcceptPluginLoaded") Then AutoAccept($pixel[0], $pixel[1])
-			Sleep(1000 / @DesktopRefresh);Sleep for a frame.
+
+			If IsDeclared("AutoAcceptPluginLoaded") Then
+				Do
+					$whnd = WinGetHandle("Dota 2")
+				Until (_WinAPI_GetClientWidth($whnd) <> 0) And (_WinAPI_GetClientHeight($whnd) <> 0)
+				AutoAccept(_WinAPI_GetClientWidth($whnd), _WinAPI_GetClientHeight($whnd))
+			EndIf
+			Sleep(1000 / @DesktopRefresh) ;Sleep for a frame.
 		EndIf
 	WEnd
 EndFunc   ;==>Snipe
