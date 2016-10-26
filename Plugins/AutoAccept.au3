@@ -5,17 +5,17 @@ Opt("PixelCoordMode", 2)
 Opt("MouseCoordMode", 2)
 Func AutoAccept($iX, $iY)
 	If $AAState = False Then Return 0
-	LoadCoordinates($iX, $iY)
+	If LoadCoordinates($iX, $iY) = -1 Then Return -1
 	If Not WinActive("Dota 2") Then Return (0)
-	PixelSearch($PixelDecline[0], $PixelDecline[1], $PixelDecline[0], $PixelDecline[1], $ColorDecline, 1);decline search
+	PixelSearch($PixelDecline[0], $PixelDecline[1], $PixelDecline[0], $PixelDecline[1], $ColorDecline, 1) ;decline search
 	If Not @error = 1 Then
-		PixelSearch($PixelAccept[0], $PixelAccept[1], $PixelAccept[0], $PixelAccept[1], $ColorAccept, 1);accept search
+		PixelSearch($PixelAccept[0], $PixelAccept[1], $PixelAccept[0], $PixelAccept[1], $ColorAccept, 1) ;accept search
 		If Not @error = 1 Then
 			MouseClick("primary", $PixelAccept[0], $PixelAccept[1], 2, 0)
 			MouseMove(0, 0, 0)
 		EndIf
 	EndIf
-	return 2
+	Return 2
 EndFunc   ;==>AutoAccept
 Func toggleAA()
 	If $AAState = True Then
@@ -142,6 +142,9 @@ Func LoadCoordinates($iX, $iY)
 			$ColorDecline = 0x869797
 			Global $PixelAccept = []
 			$ColorAccept = 0x000000
+
+		Case Else
+			Return -1
 	EndSelect
 EndFunc   ;==>LoadCoordinates
 
