@@ -3,6 +3,8 @@
 #AutoIt3Wrapper_Icon=AutoAcceptor.ico
 #AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_UseUpx=y
+#AutoIt3Wrapper_Run_Au3Stripper=y
+#Au3Stripper_Parameters=/so /mo /rm
 #EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 #include "Plugins\AutoAccept.au3"
 #include "Winapi.au3"
@@ -20,7 +22,7 @@ While 1
 				$whnd = WinGetHandle("Dota 2")
 			Until (IsDeclared("whnd") <> 0) And (_WinAPI_GetClientWidth($whnd) <> 0) And (_WinAPI_GetClientHeight($whnd) <> 0)
 			AutoAccept(_WinAPI_GetClientWidth($whnd), _WinAPI_GetClientHeight($whnd))
-			Sleep(500)
+			Sleep(1000)
 		Case Else
 			Sleep(5000)
 	EndSelect
